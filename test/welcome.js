@@ -23,5 +23,17 @@ describe('welcome()', function() {
 
       stream.write(':cameron.freenode.net 001 tobi :Welcome to the freenode Internet Relay Chat Network tobi\r\n');
     });
+
+    it('should emit "welcome" for slack like message', function(done) {
+      var stream = new Stream;
+      var client = irc(stream);
+
+      client.on('welcome', function(nick) {
+        nick.should.equal('tobi');
+        done();
+      });
+
+      stream.write(':cameron.freenode.net 001 tobi Welcome to the freenode Internet Relay Chat Network tobi\r\n');
+    });
   });
 });
